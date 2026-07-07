@@ -83,6 +83,13 @@ set +u
 source "/opt/intel/openvino_${OPENVINO_VERSION}/setupvars.sh"
 set -u
 
+if [[ "$debug" == "true" ]]; then
+    log "OpenCL devices visible to the app:"
+    clinfo -l >&2 || true
+    log "DRI devices visible to the app:"
+    ls -l /dev/dri >&2 || true
+fi
+
 server_args=(
     --model "$model_path"
     --language "$language"

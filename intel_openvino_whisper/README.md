@@ -11,7 +11,7 @@ entity in your Assist pipeline.
 
 Home Assistant should run this app from a prebuilt image:
 
-`ghcr.io/wheemer/amd64-app-intel-openvino-whisper:0.1.0`
+`ghcr.io/wheemer/amd64-app-intel-openvino-whisper:<version>`
 
 The image is built outside Home Assistant. Keep `version` in `config.yaml`
 matched to the image tag.
