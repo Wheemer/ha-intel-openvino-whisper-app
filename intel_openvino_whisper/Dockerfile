@@ -55,27 +55,17 @@ RUN wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PR
         | gpg --dearmor > /usr/share/keyrings/oneapi-archive-keyring.gpg \
     && echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
         > /etc/apt/sources.list.d/oneAPI.list \
-    && wget -qO- https://repositories.intel.com/gpu/intel-graphics.key \
-        | gpg --dearmor > /usr/share/keyrings/intel-graphics.gpg \
-    && echo "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu jammy client" \
-        > /etc/apt/sources.list.d/intel-gpu-jammy.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         clinfo \
         hwinfo \
-        intel-level-zero-gpu \
-        intel-media-va-driver-non-free \
-        intel-opencl-icd \
+        intel-opencl-icd=22.14.22890-1 \
         intel-oneapi-runtime-dpcpp-cpp \
         intel-oneapi-runtime-mkl \
-        level-zero \
-        level-zero-dev \
         libegl1-mesa \
         libgbm1 \
         libgl1-mesa-dri \
-        libigdgmm12 \
-        libmfx1 \
-        libmfxgen1 \
+        libigdgmm12=22.1.2+ds1-1 \
         libvpl2 \
         mesa-va-drivers \
         mesa-vulkan-drivers \
