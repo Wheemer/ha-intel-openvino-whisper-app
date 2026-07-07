@@ -111,10 +111,11 @@ fi
 start_whisper() {
     log "Starting whisper.cpp on OpenVINO device ${openvino_device}"
     /opt/whisper.cpp/build/bin/whisper-server "${server_args[@]}" &
-    echo $!
+    whisper_pid=$!
 }
 
-whisper_pid="$(start_whisper)"
+whisper_pid=
+start_whisper
 
 sleep 5
 if ! kill -0 "$whisper_pid" 2>/dev/null; then
@@ -128,7 +129,7 @@ if ! kill -0 "$whisper_pid" 2>/dev/null; then
                 break
             fi
         done
-        whisper_pid="$(start_whisper)"
+        start_whisper
     else
         log "whisper.cpp failed to start"
         exit 1
