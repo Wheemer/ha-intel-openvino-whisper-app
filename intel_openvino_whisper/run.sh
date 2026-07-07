@@ -79,7 +79,9 @@ if ! compgen -G "${MODELS_DIR}/ggml-${model}-encoder-openvino.*" >/dev/null; the
     log "OpenVINO encoder sidecar files were not found for ${model}; GPU startup may fail"
 fi
 
+set +u
 source "/opt/intel/openvino_${OPENVINO_VERSION}/setupvars.sh"
+set -u
 
 server_args=(
     --model "$model_path"
