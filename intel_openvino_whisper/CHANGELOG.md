@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Fix startup so `whisper.cpp` logs do not block the Wyoming adapter from launching.
+
 ## 0.1.2
 
 - Use Ubuntu Jammy's older Intel OpenCL runtime for better Gen9/Kaby Lake compatibility.
