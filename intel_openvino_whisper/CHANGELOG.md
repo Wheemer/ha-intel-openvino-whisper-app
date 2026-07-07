@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Allow Intel OpenVINO `setupvars.sh` to run under the app startup script.
+
 ## 0.1.0
 
 - Initial Home Assistant app package.
