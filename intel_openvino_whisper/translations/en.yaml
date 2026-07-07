@@ -1,0 +1,27 @@
+configuration:
+  model:
+    name: Whisper model
+    description: Model downloaded from whisper.cpp on first start.
+  language:
+    name: Language
+    description: Spoken language code, for example en.
+  openvino_device:
+    name: OpenVINO device
+    description: Use GPU for Intel iGPU acceleration, CPU for fallback, or AUTO for OpenVINO selection.
+  fallback_to_cpu:
+    name: Fall back to CPU
+    description: Retry on CPU if the GPU backend fails to start.
+  beam_size:
+    name: Beam size
+    description: Lower values are faster; higher values may improve accuracy.
+  threads:
+    name: Threads
+    description: CPU worker threads used by whisper.cpp.
+  prompt:
+    name: Initial prompt
+    description: Optional command vocabulary hint for Whisper.
+  debug:
+    name: Debug logging
+    description: Enable verbose logs.
+network:
+  10300/tcp: Wyoming speech-to-text endpoint

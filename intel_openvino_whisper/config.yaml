@@ -1,0 +1,44 @@
+name: Intel OpenVINO Whisper
+version: 0.1.0
+slug: intel_openvino_whisper
+description: Local Wyoming speech-to-text using whisper.cpp with Intel OpenVINO acceleration
+url: https://github.com/Wheemer/ha-intel-openvino-whisper-app
+arch:
+  - amd64
+image: ghcr.io/wheemer/{arch}-app-intel-openvino-whisper
+startup: application
+boot: manual
+init: false
+stage: experimental
+discovery:
+  - wyoming
+ports:
+  10300/tcp: 10300
+ports_description:
+  10300/tcp: Wyoming speech-to-text endpoint
+devices:
+  - /dev/dri
+apparmor: false
+video: true
+backup_exclude:
+  - "models*"
+  - "models/*"
+options:
+  model: small
+  language: en
+  openvino_device: GPU
+  fallback_to_cpu: true
+  beam_size: 1
+  threads: 4
+  prompt: ""
+  debug: false
+schema:
+  model: list(base|small|small.en-tdrz|medium|large-v1|large-v2|large-v3)
+  language: str
+  openvino_device: list(GPU|CPU|AUTO)
+  fallback_to_cpu: bool
+  beam_size: int
+  threads: int
+  prompt: str?
+  debug: bool
+watchdog: tcp://[HOST]:[PORT:10300]

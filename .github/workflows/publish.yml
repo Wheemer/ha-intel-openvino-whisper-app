@@ -1,0 +1,49 @@
+name: Publish app image
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          version="$(python3 - <<'PY'
+          import pathlib, re
+          text = pathlib.Path("intel_openvino_whisper/config.yaml").read_text()
+          print(re.search(r"^version:\s*([^\s]+)\s*$", text, re.M).group(1))
+          PY
+          )"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: |
+          docker build \
+            --build-arg BUILD_VERSION="${{ steps.version.outputs.version }}" \
+            --build-arg BUILD_ARCH=amd64 \
+            -t ghcr.io/wheemer/amd64-app-intel-openvino-whisper:${{ steps.version.outputs.version }} \
+            intel_openvino_whisper
+
+      - name: Publish image
+        run: |
+          docker push ghcr.io/wheemer/amd64-app-intel-openvino-whisper:${{ steps.version.outputs.version }}
