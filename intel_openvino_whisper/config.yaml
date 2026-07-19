@@ -1,5 +1,5 @@
 name: Intel OpenVINO Whisper
-version: 0.1.3
+version: 0.1.4
 slug: intel_openvino_whisper
 description: Local Wyoming speech-to-text using whisper.cpp with Intel OpenVINO acceleration
 url: https://github.com/Wheemer/ha-intel-openvino-whisper-app
