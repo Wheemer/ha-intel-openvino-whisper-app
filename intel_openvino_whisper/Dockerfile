@@ -84,7 +84,14 @@ RUN wget "${OPENVINO_PACKAGE_URL}" -O /tmp/openvino.tgz \
 
 RUN git clone --depth 1 --branch "${WHISPER_CPP_REF}" https://github.com/ggerganov/whisper.cpp.git /opt/whisper.cpp \
     && source "${INTEL_OPENVINO_DIR}/setupvars.sh" \
-    && cmake -S /opt/whisper.cpp -B /opt/whisper.cpp/build -DWHISPER_OPENVINO=1 -DCMAKE_BUILD_TYPE=Release \
+    && cmake -S /opt/whisper.cpp -B /opt/whisper.cpp/build \
+        -DWHISPER_OPENVINO=1 \
+        -DGGML_NATIVE=OFF \
+        -DGGML_AVX=ON \
+        -DGGML_AVX2=ON \
+        -DGGML_FMA=ON \
+        -DGGML_F16C=ON \
+        -DCMAKE_BUILD_TYPE=Release \
     && cmake --build /opt/whisper.cpp/build --config Release -j"$(nproc)"
 
 RUN git clone --depth 1 https://github.com/ser/wyoming-whisper-api-client.git /opt/wyoming-whisper-api-client \
