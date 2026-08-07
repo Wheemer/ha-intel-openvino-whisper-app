@@ -4,7 +4,7 @@ ARG BUILD_VERSION=0.1.0
 ARG BUILD_ARCH=amd64
 ARG OPENVINO_VERSION=2023.0.0
 ARG OPENVINO_PACKAGE_URL=https://storage.openvinotoolkit.org/repositories/openvino/packages/2023.0/linux/l_openvino_toolkit_ubuntu22_2023.0.0.10926.b4452d56304_x86_64.tgz
-ARG WHISPER_CPP_REF=v1.7.4
+ARG WHISPER_CPP_REF=v1.9.2
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -82,7 +82,7 @@ RUN wget "${OPENVINO_PACKAGE_URL}" -O /tmp/openvino.tgz \
     && mv /tmp/l_openvino_toolkit_ubuntu22_${OPENVINO_VERSION}.* "${INTEL_OPENVINO_DIR}" \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth 1 --branch "${WHISPER_CPP_REF}" https://github.com/ggerganov/whisper.cpp.git /opt/whisper.cpp \
+RUN git clone --depth 1 --branch "${WHISPER_CPP_REF}" https://github.com/ggml-org/whisper.cpp.git /opt/whisper.cpp \
     && source "${INTEL_OPENVINO_DIR}/setupvars.sh" \
     && cmake -S /opt/whisper.cpp -B /opt/whisper.cpp/build \
         -DWHISPER_OPENVINO=1 \

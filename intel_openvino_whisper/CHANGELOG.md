@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- Upgrade `whisper.cpp` from v1.7.4 to v1.9.2 (ggml-org/whisper.cpp).
+
 ## 0.1.3
 
 - Fix startup so `whisper.cpp` logs do not block the Wyoming adapter from launching.
