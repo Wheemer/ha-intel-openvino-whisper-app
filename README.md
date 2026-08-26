@@ -69,29 +69,8 @@ Models are stored under `/data/models` and excluded from app backups.
 - Confirm the logs show `/dev/dri/renderD128` and an OpenVINO `GPU` device.
 - If GPU initialization fails, enable `debug` and temporarily test with
   `openvino_device: CPU` to separate model problems from GPU access problems.
-- An STT entity may show `unknown` until Home Assistant sends it audio. Verify it by
-  running an Assist request and checking the app log for a completed transcript.
 
 ## Updates
 
-GitHub checks pinned upstream sources every week. Dependency updates are proposed
-as pull requests and built on a GitHub-hosted runner before they can be merged.
-Merging a reviewed update publishes a new GHCR image; installing that update in
-Home Assistant remains a manual decision.
-
-## Development
-
-The prebuilt image is published as
-`ghcr.io/wheemer/amd64-app-intel-openvino-whisper:<version>`.
-
-```powershell
-.\scripts\build-local.ps1
-.\scripts\publish-ghcr.ps1
-```
-
-```bash
-./scripts/build-local.sh
-./scripts/publish-ghcr.sh
-```
-
-Keep `intel_openvino_whisper/config.yaml` versioned to match the image tag.
+Tracked upstream releases are test-built, published, and merged automatically.
+Home Assistant installs new app versions when automatic updates are enabled.

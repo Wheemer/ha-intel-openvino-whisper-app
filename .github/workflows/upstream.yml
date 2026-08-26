@@ -6,7 +6,9 @@ on:
     - cron: "30 8 * * 1"
 
 permissions:
+  attestations: write
   contents: write
+  id-token: write
   packages: write
   pull-requests: write
 
@@ -41,8 +43,23 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish tested image
+        id: publish
         if: steps.update.outputs.changed == 'true'
-        run: docker push "ghcr.io/wheemer/amd64-app-intel-openvino-whisper:${{ steps.update.outputs.version }}"
+        shell: bash
+        run: |
+          image="ghcr.io/wheemer/amd64-app-intel-openvino-whisper:${{ steps.update.outputs.version }}"
+          docker push "$image"
+          digest="$(docker image inspect "$image" --format '{{ index .RepoDigests 0 }}' | cut -d@ -f2)"
+          test -n "$digest"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Attest image provenance
+        if: steps.update.outputs.changed == 'true'
+        uses: actions/attest-build-provenance@v4.2.2
+        with:
+          subject-name: ghcr.io/wheemer/amd64-app-intel-openvino-whisper
+          subject-digest: ${{ steps.publish.outputs.digest }}
+          push-to-registry: true
 
       - name: Open and merge upstream pull request
         if: steps.update.outputs.changed == 'true'
