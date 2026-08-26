@@ -22,5 +22,6 @@ updates:
     labels:
       - dependencies
     ignore:
-      # OpenVINO 2023 and the Gen9 Intel runtime require the Jammy userspace.
+      # The tested OpenVINO 2023 archive and legacy Gen9 driver stack are
+      # Jammy-specific. Evaluate a modern legacy1 stack as a separate change.
       - dependency-name: ubuntu
