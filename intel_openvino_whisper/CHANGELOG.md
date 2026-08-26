@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.9
+
+- Clear a stale jemalloc preload preserved by Supervisor during in-place updates.
+
 ## 0.1.8
 
 - Remove the jemalloc preload that conflicts with OpenVINO 2026 at runtime.

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+# Supervisor may preserve environment values from an older image during an update.
+unset LD_PRELOAD
+
 CONFIG_PATH=/data/options.json
 MODELS_DIR=/data/models
 WHISPER_HOST=127.0.0.1
