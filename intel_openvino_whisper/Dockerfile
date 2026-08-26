@@ -46,6 +46,7 @@ RUN apt-get update \
         libgomp1 \
         libjemalloc-dev \
         netcat-traditional \
+        ninja-build \
         ocl-icd-libopencl1 \
         opencl-headers \
         pkg-config \
@@ -87,7 +88,7 @@ RUN wget "${OPENVINO_PACKAGE_URL}" -O /tmp/openvino.tgz \
 
 RUN git clone --depth 1 --branch "${WHISPER_CPP_REF}" https://github.com/ggml-org/whisper.cpp.git /opt/whisper.cpp \
     && source "${INTEL_OPENVINO_DIR}/setupvars.sh" \
-    && cmake -S /opt/whisper.cpp -B /opt/whisper.cpp/build \
+    && cmake -S /opt/whisper.cpp -B /opt/whisper.cpp/build -G Ninja \
         -DWHISPER_OPENVINO=1 \
         -DGGML_NATIVE=OFF \
         -DGGML_AVX=ON \
