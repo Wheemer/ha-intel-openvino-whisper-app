@@ -1,10 +1,15 @@
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
 ARG BUILD_VERSION=0.1.0
 ARG BUILD_ARCH=amd64
-ARG OPENVINO_VERSION=2023.0.0
-ARG OPENVINO_PACKAGE_URL=https://storage.openvinotoolkit.org/repositories/openvino/packages/2023.0/linux/l_openvino_toolkit_ubuntu22_2023.0.0.10926.b4452d56304_x86_64.tgz
-ARG WHISPER_CPP_REF=v1.9.2
+ARG OPENVINO_VERSION=2026.3.0
+ARG OPENVINO_PACKAGE_DIR=openvino_toolkit_ubuntu26_2026.3.0.22451.bd8d6542e3c_x86_64
+ARG OPENVINO_PACKAGE_URL=https://storage.openvinotoolkit.org/repositories/openvino/packages/2026.3/linux/openvino_toolkit_ubuntu26_2026.3.0.22451.bd8d6542e3c_x86_64.tgz
+ARG INTEL_COMPUTE_RUNTIME_VERSION=24.35.30872.36
+ARG INTEL_LEVEL_ZERO_VERSION=1.5.30872.36
+ARG INTEL_IGC_VERSION=1.0.17537.24
+ARG INTEL_GMMLIB_VERSION=22.5.0
+ARG WHISPER_CPP_REF=v1.9.3
 ARG WYOMING_CLIENT_REF=6fe7f273d76283403ce44ed6b4d1ad65633d1f04
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -15,12 +20,11 @@ ENV LC_ALL=C.UTF-8
 ENV OPENVINO_VERSION=${OPENVINO_VERSION}
 ENV INTEL_OPENVINO_DIR=/opt/intel/openvino_${OPENVINO_VERSION}
 ENV PATH=/opt/wyoming-whisper-api-client/.venv/bin:${INTEL_OPENVINO_DIR}/bin:${PATH}
-ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
 ENV NEOReadDebugKeys=1
 ENV ClDeviceGlobalMemSizeAvailablePercent=90
 
 LABEL \
-    io.hass.name="Intel OpenVINO Whisper" \
+    io.hass.name="Whisper for Intel OpenVINO" \
     io.hass.description="Local Wyoming speech-to-text using whisper.cpp with Intel OpenVINO acceleration" \
     io.hass.version="${BUILD_VERSION}" \
     io.hass.type="app" \
@@ -34,14 +38,15 @@ RUN apt-get update \
         curl \
         ffmpeg \
         git \
-        gnupg2 \
-        gpg-agent \
+        g++ \
+        gcc \
         jq \
         libglib2.0-0 \
         libgl1 \
         libgomp1 \
         libjemalloc-dev \
         netcat-traditional \
+        ocl-icd-libopencl1 \
         opencl-headers \
         pkg-config \
         python3 \
@@ -52,35 +57,32 @@ RUN apt-get update \
         xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
-        | gpg --dearmor > /usr/share/keyrings/oneapi-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
-        > /etc/apt/sources.list.d/oneAPI.list \
+RUN mkdir -p /tmp/intel-legacy \
+    && cd /tmp/intel-legacy \
+    && curl -fLO --retry 5 --retry-delay 2 --connect-timeout 20 --max-time 300 "https://github.com/intel/intel-graphics-compiler/releases/download/igc-${INTEL_IGC_VERSION}/intel-igc-core_${INTEL_IGC_VERSION}_amd64.deb" \
+    && curl -fLO --retry 5 --retry-delay 2 --connect-timeout 20 --max-time 300 "https://github.com/intel/intel-graphics-compiler/releases/download/igc-${INTEL_IGC_VERSION}/intel-igc-opencl_${INTEL_IGC_VERSION}_amd64.deb" \
+    && curl -fLO --retry 5 --retry-delay 2 --connect-timeout 20 --max-time 300 "https://github.com/intel/compute-runtime/releases/download/${INTEL_COMPUTE_RUNTIME_VERSION}/intel-level-zero-gpu-legacy1_${INTEL_LEVEL_ZERO_VERSION}_amd64.deb" \
+    && curl -fLO --retry 5 --retry-delay 2 --connect-timeout 20 --max-time 300 "https://github.com/intel/compute-runtime/releases/download/${INTEL_COMPUTE_RUNTIME_VERSION}/intel-opencl-icd-legacy1_${INTEL_COMPUTE_RUNTIME_VERSION}_amd64.deb" \
+    && curl -fLO --retry 5 --retry-delay 2 --connect-timeout 20 --max-time 300 "https://github.com/intel/compute-runtime/releases/download/${INTEL_COMPUTE_RUNTIME_VERSION}/libigdgmm12_${INTEL_GMMLIB_VERSION}_amd64.deb" \
+    && printf '%s  %s\n' \
+        '40dfbd15ab62de036a00824b304a2aa1fa2d81ad60ef83da09cfe3c5a80c429f' "intel-level-zero-gpu-legacy1_${INTEL_LEVEL_ZERO_VERSION}_amd64.deb" \
+        'bbe71e4f414259e06a10cde72c29a2bd78d41b2bb2f6f8463b1806797fe66e85' "intel-opencl-icd-legacy1_${INTEL_COMPUTE_RUNTIME_VERSION}_amd64.deb" \
+        'cc29d14df83cff1b3c6a66baa39257f0211b168ab43a99c2dc62a3734431bc23' "libigdgmm12_${INTEL_GMMLIB_VERSION}_amd64.deb" \
+        | sha256sum -c - \
     && apt-get update \
+    && apt-get install -y --no-install-recommends ./*.deb \
     && apt-get install -y --no-install-recommends \
         clinfo \
         hwinfo \
-        intel-opencl-icd=22.14.22890-1 \
-        intel-oneapi-runtime-dpcpp-cpp \
-        intel-oneapi-runtime-mkl \
-        libegl1-mesa \
-        libgbm1 \
-        libgl1-mesa-dri \
-        libigdgmm12=22.1.2+ds1-1 \
-        libvpl2 \
-        mesa-va-drivers \
-        mesa-vulkan-drivers \
-        vainfo \
-        va-driver-all \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /tmp/intel-legacy /var/lib/apt/lists/*
+
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
 
 RUN wget "${OPENVINO_PACKAGE_URL}" -O /tmp/openvino.tgz \
     && tar -xzf /tmp/openvino.tgz -C /tmp \
     && rm /tmp/openvino.tgz \
-    && sed -i 's/apt-get install /apt-get install -y /g' /tmp/l_openvino_toolkit_ubuntu22_${OPENVINO_VERSION}.*/install_dependencies/install_openvino_dependencies.sh \
-    && /bin/bash /tmp/l_openvino_toolkit_ubuntu22_${OPENVINO_VERSION}.*/install_dependencies/install_openvino_dependencies.sh \
     && mkdir -p /opt/intel \
-    && mv /tmp/l_openvino_toolkit_ubuntu22_${OPENVINO_VERSION}.* "${INTEL_OPENVINO_DIR}" \
+    && mv "/tmp/${OPENVINO_PACKAGE_DIR}" "${INTEL_OPENVINO_DIR}" \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth 1 --branch "${WHISPER_CPP_REF}" https://github.com/ggml-org/whisper.cpp.git /opt/whisper.cpp \

@@ -22,6 +22,6 @@ updates:
     labels:
       - dependencies
     ignore:
-      # The tested OpenVINO 2023 archive and legacy Gen9 driver stack are
-      # Jammy-specific. Evaluate a modern legacy1 stack as a separate change.
+      # Base OS updates must stay coordinated with the matching OpenVINO archive
+      # and the separately versioned Intel Gen9 legacy1 compute runtime.
       - dependency-name: ubuntu

@@ -1,4 +1,4 @@
-# Intel OpenVINO Whisper
+# Whisper for Intel OpenVINO
 
 Local Wyoming speech-to-text for Home Assistant Assist using `whisper.cpp` and
 Intel OpenVINO GPU acceleration.
@@ -11,7 +11,7 @@ Intel OpenVINO GPU acceleration.
 
 ## Setup
 
-1. Install the **Intel OpenVINO Whisper** app.
+1. Install the **Whisper for Intel OpenVINO** app.
 2. Leave `openvino_device` set to `GPU`, choose a model, save, and start the app.
 3. Wait for the first model download to finish.
 4. Add the discovered Wyoming service under **Settings > Devices & services**.

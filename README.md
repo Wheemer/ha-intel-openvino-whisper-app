@@ -1,4 +1,4 @@
-# Intel OpenVINO Whisper
+# Whisper for Intel OpenVINO
 ### GPU-accelerated local speech-to-text for Home Assistant Assist
 
 [![Home Assistant App](https://img.shields.io/badge/HOME%20ASSISTANT-APP-41BDF5?style=for-the-badge&logo=home-assistant&logoColor=white&labelColor=555555)](https://www.home-assistant.io/apps/)
@@ -6,7 +6,7 @@
 [![Latest release](https://img.shields.io/github/v/release/Wheemer/ha-intel-openvino-whisper-app?style=for-the-badge&logo=github&logoColor=white&label=RELEASE&labelColor=555555&color=22C55E)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/releases/latest)
 [![Publish](https://img.shields.io/github/actions/workflow/status/Wheemer/ha-intel-openvino-whisper-app/publish.yml?style=for-the-badge&label=BUILD&labelColor=555555)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/actions/workflows/publish.yml)
 
-Intel OpenVINO Whisper provides a local Wyoming speech-to-text endpoint backed by
+Whisper for Intel OpenVINO provides a local Wyoming speech-to-text endpoint backed by
 [`whisper.cpp`](https://github.com/ggml-org/whisper.cpp). It is built for Home
 Assistant OS on `amd64` Intel systems and uses the integrated GPU through
 OpenVINO while retaining an optional CPU fallback.
@@ -24,13 +24,17 @@ Home Assistant machine.
 This build avoids CPU-specific native instructions so it remains compatible
 with older Intel processors while OpenVINO handles the encoder on the GPU.
 
+The current image uses Ubuntu 26.04 and OpenVINO 2026.3. Intel HD 630 and other
+Gen9 graphics devices use Intel's maintained `legacy1` compute runtime because
+they are no longer included in the regular current-generation driver package.
+
 ## Installation
 
 [![Add app repository to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FWheemer%2Fha-intel-openvino-whisper-app)
 
 1. Select the button above, or open **Settings > Apps > App store > Repositories**.
 2. Add `https://github.com/Wheemer/ha-intel-openvino-whisper-app`.
-3. Install **Intel OpenVINO Whisper** from the app store.
+3. Install **Whisper for Intel OpenVINO** from the app store.
 4. Open **Configuration**, choose a model, and leave **OpenVINO device** set to `GPU`.
 5. Start the app and wait for the first model download to complete.
 

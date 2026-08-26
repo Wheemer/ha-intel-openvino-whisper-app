@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.7
+
+- Rename the app to Whisper for Intel OpenVINO and add official Whisper artwork.
+- Upgrade the app base from Ubuntu 22.04 to Ubuntu 26.04.
+- Upgrade OpenVINO from 2023.0 to 2026.3.
+- Replace the old Jammy GPU packages with Intel's Gen9 `legacy1` compute runtime.
+- Upgrade `whisper.cpp` from v1.9.2 to v1.9.3.
+
 ## 0.1.6
 
 - Promote the tested app metadata from experimental to stable.
