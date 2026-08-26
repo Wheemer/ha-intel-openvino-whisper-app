@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Check pinned upstream sources
         id: update
@@ -34,7 +34,7 @@ jobs:
 
       - name: Log in to GitHub Container Registry
         if: steps.update.outputs.changed == 'true'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
