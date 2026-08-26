@@ -3,8 +3,11 @@ name: Publish app image
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+    paths:
+      - "intel_openvino_whisper/**"
+      - ".github/workflows/publish.yml"
 
 permissions:
   contents: read

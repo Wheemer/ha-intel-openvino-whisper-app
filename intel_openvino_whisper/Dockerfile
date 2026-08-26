@@ -5,6 +5,7 @@ ARG BUILD_ARCH=amd64
 ARG OPENVINO_VERSION=2023.0.0
 ARG OPENVINO_PACKAGE_URL=https://storage.openvinotoolkit.org/repositories/openvino/packages/2023.0/linux/l_openvino_toolkit_ubuntu22_2023.0.0.10926.b4452d56304_x86_64.tgz
 ARG WHISPER_CPP_REF=v1.9.2
+ARG WYOMING_CLIENT_REF=6fe7f273d76283403ce44ed6b4d1ad65633d1f04
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -94,8 +95,9 @@ RUN git clone --depth 1 --branch "${WHISPER_CPP_REF}" https://github.com/ggml-or
         -DCMAKE_BUILD_TYPE=Release \
     && cmake --build /opt/whisper.cpp/build --config Release -j"$(nproc)"
 
-RUN git clone --depth 1 https://github.com/ser/wyoming-whisper-api-client.git /opt/wyoming-whisper-api-client \
+RUN git clone https://github.com/ser/wyoming-whisper-api-client.git /opt/wyoming-whisper-api-client \
     && cd /opt/wyoming-whisper-api-client \
+    && git checkout "${WYOMING_CLIENT_REF}" \
     && python3 -m venv .venv \
     && .venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel \
     && .venv/bin/pip install --no-cache-dir -r requirements.txt \
