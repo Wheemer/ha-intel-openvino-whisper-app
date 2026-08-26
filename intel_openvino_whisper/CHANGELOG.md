@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.6
+
+- Promote the tested app metadata from experimental to stable.
+- Pin the Wyoming adapter source for reproducible builds.
+- Add automated upstream dependency checks and cloud build validation.
+
 ## 0.1.5
 
 - Upgrade `whisper.cpp` from v1.7.4 to v1.9.2 (ggml-org/whisper.cpp).
