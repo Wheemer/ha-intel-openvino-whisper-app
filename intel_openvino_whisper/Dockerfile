@@ -4,7 +4,7 @@ ARG BUILD_VERSION=0.1.0
 ARG BUILD_ARCH=amd64
 ARG OPENVINO_VERSION=2023.0.0
 ARG OPENVINO_PACKAGE_URL=https://storage.openvinotoolkit.org/repositories/openvino/packages/2023.0/linux/l_openvino_toolkit_ubuntu22_2023.0.0.10926.b4452d56304_x86_64.tgz
-ARG WHISPER_CPP_REF=v1.9.2
+ARG WHISPER_CPP_REF=v1.9.3
 ARG WYOMING_CLIENT_REF=6fe7f273d76283403ce44ed6b4d1ad65633d1f04
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
