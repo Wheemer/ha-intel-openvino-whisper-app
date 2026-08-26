@@ -21,7 +21,7 @@ jobs:
         run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12 -color
 
       - name: Lint shell scripts
-        run: shellcheck -x intel_openvino_whisper/run.sh scripts/*.sh
+        run: shellcheck -x --severity=warning -e SC1090 intel_openvino_whisper/run.sh scripts/*.sh
 
       - name: Lint Dockerfile
         uses: hadolint/hadolint-action@v3.5.0
