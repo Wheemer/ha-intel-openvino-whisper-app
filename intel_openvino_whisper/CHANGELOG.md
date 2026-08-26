@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.7
+
+- whisper.cpp v1.9.2 -> v1.9.3.
+
 ## 0.1.6
 
 - Promote the tested app metadata from experimental to stable.
