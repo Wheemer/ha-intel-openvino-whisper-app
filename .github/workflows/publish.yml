@@ -10,7 +10,9 @@ on:
       - ".github/workflows/publish.yml"
 
 permissions:
+  attestations: write
   contents: read
+  id-token: write
   packages: write
 
 jobs:
@@ -48,5 +50,18 @@ jobs:
             intel_openvino_whisper
 
       - name: Publish image
+        id: publish
+        shell: bash
         run: |
-          docker push ghcr.io/wheemer/amd64-app-intel-openvino-whisper:${{ steps.version.outputs.version }}
+          image="ghcr.io/wheemer/amd64-app-intel-openvino-whisper:${{ steps.version.outputs.version }}"
+          docker push "$image"
+          digest="$(docker image inspect "$image" --format '{{ index .RepoDigests 0 }}' | cut -d@ -f2)"
+          test -n "$digest"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Attest image provenance
+        uses: actions/attest-build-provenance@v4.2.2
+        with:
+          subject-name: ghcr.io/wheemer/amd64-app-intel-openvino-whisper
+          subject-digest: ${{ steps.publish.outputs.digest }}
+          push-to-registry: true
