@@ -44,7 +44,6 @@ RUN apt-get update \
         libglib2.0-0 \
         libgl1 \
         libgomp1 \
-        libjemalloc-dev \
         netcat-traditional \
         ninja-build \
         ocl-icd-libopencl1 \
@@ -76,8 +75,6 @@ RUN mkdir -p /tmp/intel-legacy \
         clinfo \
         hwinfo \
     && rm -rf /tmp/intel-legacy /var/lib/apt/lists/*
-
-ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
 
 RUN wget "${OPENVINO_PACKAGE_URL}" -O /tmp/openvino.tgz \
     && tar -xzf /tmp/openvino.tgz -C /tmp \

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.8
+
+- Remove the jemalloc preload that conflicts with OpenVINO 2026 at runtime.
+
 ## 0.1.7
 
 - Rename the app to Whisper for Intel OpenVINO and add official Whisper artwork.
