@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.10
+
+- whisper.cpp v1.9.3 -> v1.9.4.
+
 ## 0.1.9
 
 - Clear a stale jemalloc preload preserved by Supervisor during in-place updates.
