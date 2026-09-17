@@ -4,7 +4,7 @@
 [![Home Assistant App](https://img.shields.io/badge/HOME%20ASSISTANT-APP-41BDF5?style=for-the-badge&logo=home-assistant&logoColor=white&labelColor=555555)](https://www.home-assistant.io/apps/)
 [![AMD64](https://img.shields.io/badge/AMD64-SUPPORTED-22C55E?style=for-the-badge&labelColor=555555)](https://github.com/Wheemer/ha-intel-openvino-whisper-app)
 [![Latest release](https://img.shields.io/github/v/release/Wheemer/ha-intel-openvino-whisper-app?style=for-the-badge&logo=github&logoColor=white&label=RELEASE&labelColor=555555&color=22C55E)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/releases/latest)
-[![Publish](https://img.shields.io/github/actions/workflow/status/Wheemer/ha-intel-openvino-whisper-app/publish.yml?style=for-the-badge&label=BUILD&labelColor=555555)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/actions/workflows/publish.yml)
+[![Build](https://img.shields.io/github/actions/workflow/status/Wheemer/ha-intel-openvino-whisper-app/quality.yml?branch=main&style=for-the-badge&label=BUILD&labelColor=555555)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/actions/workflows/quality.yml)
 
 Whisper for Intel OpenVINO provides a local Wyoming speech-to-text endpoint backed by
 [`whisper.cpp`](https://github.com/ggml-org/whisper.cpp). It is built for Home
