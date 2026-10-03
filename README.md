@@ -1,10 +1,18 @@
+<div align="center">
+
+<img src="intel_openvino_whisper/logo.png" width="112" alt="Whisper logo">
+
 # Whisper for Intel OpenVINO
-### GPU-accelerated local speech-to-text for Home Assistant Assist
+
+### Local speech-to-text for Home Assistant Assist, accelerated by Intel OpenVINO
 
 [![Home Assistant App](https://img.shields.io/badge/HOME%20ASSISTANT-APP-41BDF5?style=for-the-badge&logo=home-assistant&logoColor=white&labelColor=555555)](https://www.home-assistant.io/apps/)
+[![Intel OpenVINO](https://img.shields.io/badge/INTEL-OPENVINO-0071C5?style=for-the-badge&logo=intel&logoColor=white&labelColor=555555)](https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html)
 [![AMD64](https://img.shields.io/badge/AMD64-SUPPORTED-22C55E?style=for-the-badge&labelColor=555555)](https://github.com/Wheemer/ha-intel-openvino-whisper-app)
 [![Latest release](https://img.shields.io/github/v/release/Wheemer/ha-intel-openvino-whisper-app?style=for-the-badge&logo=github&logoColor=white&label=RELEASE&labelColor=555555&color=22C55E)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/releases/latest)
 [![Build](https://img.shields.io/github/actions/workflow/status/Wheemer/ha-intel-openvino-whisper-app/quality.yml?branch=main&style=for-the-badge&label=BUILD&labelColor=555555)](https://github.com/Wheemer/ha-intel-openvino-whisper-app/actions/workflows/quality.yml)
+
+</div>
 
 Whisper for Intel OpenVINO provides a local Wyoming speech-to-text endpoint backed by
 [`whisper.cpp`](https://github.com/ggml-org/whisper.cpp). It is built for Home
