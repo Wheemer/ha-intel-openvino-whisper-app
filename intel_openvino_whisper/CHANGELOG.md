@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.11
+
+- whisper.cpp v1.9.4 -> v1.9.5.
+
 ## 0.1.10
 
 - whisper.cpp v1.9.3 -> v1.9.4.
