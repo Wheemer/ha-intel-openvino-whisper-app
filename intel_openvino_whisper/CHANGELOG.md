@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.12
+
+- Wyoming client 6fe7f273 -> 4a5de756.
+
 ## 0.1.11
 
 - whisper.cpp v1.9.4 -> v1.9.5.
